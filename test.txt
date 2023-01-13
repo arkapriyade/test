@@ -1,0 +1,37 @@
+
+
+1.
+//python code
+import json
+
+from flask import Flask, request
+import requests
+
+app = Flask(__name__)
+
+@app.route('/entries1', methods=['GET'])
+def welcome():
+    args=request.args.to_dict()
+    catagory=args['category']
+    dict1={}
+    list=[]
+    response= requests.get('https://api.publicapis.org/entries?category='+catagory)
+    for i in response.json()['entries']:
+        dict1={}
+        dict1['Description']=i['Description']
+        dict1['title']=i['Category']
+        list.append(dict1)
+    return list
+@app.route('/entries2', methods=['GET'])
+def welcome():
+    response= requests.get('https://api.publicapis.org/entries?category=')
+    save_file=open('file name','wb')
+    save_file.write(response.json())
+
+    return "file saved"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+c)Use a strong authentication and authorization solution.
+Remove information that’s not meant to be shared.
+Don’t expose more data than necessary
